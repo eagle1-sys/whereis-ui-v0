@@ -55,7 +55,7 @@
     <body
         class="font-['iA_Writer_Quattro'] leading-relaxed max-w-xl mx-auto min-h-screen flex flex-col pt-4 px-4"
     >
-        <div class="flex justify-end mb-16">
+        <div class="flex justify-center mt-4 mb-16">
             <svg
                 class="w-9 h-9"
                 width="100%"
@@ -123,38 +123,31 @@
         <main class="flex-grow w-full py-12">
             <div class="relative">
                 <div class="space-y-6">
-                    <h1 class="text-4xl font-['Fugaz_One']">Where is it?</h1>
-                    <br />
-                    <br />
+                    <h1 class="text-4xl font-['Fugaz_One'] mb-32">
+                        Where is it?
+                    </h1>
                     <form
                         id="tracking-form"
                         class="space-y-4"
                         onsubmit="handleSubmit(event)"
                     >
                         <div class="relative">
-                            <label
-                                for="tracking-input"
-                                class="block text-sm mb-2"
-                                >Enter Tracking Number</label
+                            <input
+                                type="text"
+                                id="tracking-input"
+                                name="tracking-input"
+                                class="w-full p-2 pr-10 border-b-2 border-black focus:outline-none placeholder:text-black/30 rounded-none"
+                                placeholder="Example: fdx-123412341234"
+                                required
+                                oninput="this.value = this.value.split('-').map((part, i) => i === 0 ? part.toLowerCase() : part).join('-')"
+                            />
+                            <button
+                                type="submit"
+                                class="absolute -right-2 top-1/2 transform -translate-y-1/2 text-xl py-2 px-4"
+                                aria-label="Submit tracking number"
                             >
-                            <div class="relative">
-                                <input
-                                    type="text"
-                                    id="tracking-input"
-                                    name="tracking-input"
-                                    class="w-full p-2 pr-10 border-b-2 border-black focus:outline-none placeholder:text-black/30 rounded-none"
-                                    placeholder="e.g. fdx-880323287624"
-                                    required
-                                    oninput="this.value = this.value.split('-').map((part, i) => i === 0 ? part.toLowerCase() : part).join('-')"
-                                />
-                                <button
-                                    type="submit"
-                                    class="absolute -right-2 top-1/2 transform -translate-y-1/2 text-xl py-2 px-4"
-                                    aria-label="Submit tracking number"
-                                >
-                                    →
-                                </button>
-                            </div>
+                                →
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -162,14 +155,19 @@
         </main>
 
         <footer class="pb-8 text-center text-xs">
-            v0.1.0 ~ © 2025 EagleOne Holdings
+            v0.1.0 ~ ©2025 EagleOne Holdings
         </footer>
 
         <script>
             function handleSubmit(event) {
                 event.preventDefault();
-                const rawValue = document.getElementById("tracking-input").value.trim();
-                const trackingNumber = rawValue.split('-').map((part, i) => i === 0 ? part.toLowerCase() : part).join('-');
+                const rawValue = document
+                    .getElementById("tracking-input")
+                    .value.trim();
+                const trackingNumber = rawValue
+                    .split("-")
+                    .map((part, i) => (i === 0 ? part.toLowerCase() : part))
+                    .join("-");
                 if (trackingNumber) {
                     window.location.href = `/whereis/?trackingid=${encodeURIComponent(trackingNumber)}`;
                 }

@@ -33,18 +33,21 @@ function displayError(message) {
   `;
 }
 
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Get tracking number from URL parameters
 const urlParams = new URLSearchParams(window.location.search);
 const rawTrackingId = urlParams.get("trackingid");
 
 // Redirect if prefix contains uppercase
-if (rawTrackingId && rawTrackingId.includes('-')) {
-  const [prefix, ...rest] = rawTrackingId.split('-');
+if (rawTrackingId && rawTrackingId.includes("-")) {
+  const [prefix, ...rest] = rawTrackingId.split("-");
   if (prefix.toLowerCase() !== prefix) {
     const newUrl = new URL(window.location.href);
-    newUrl.searchParams.set("trackingid", prefix.toLowerCase() + '-' + rest.join('-'));
+    newUrl.searchParams.set(
+      "trackingid",
+      prefix.toLowerCase() + "-" + rest.join("-"),
+    );
     window.location.href = newUrl.toString();
     throw new Error("Redirecting to lowercase prefix");
   }
@@ -54,11 +57,13 @@ const trackingNumber = rawTrackingId;
 
 // Update page title if tracking number exists
 if (trackingNumber) {
-  document.title = `EG1: Where is ${trackingNumber}?`;
+  document.title = `→ ${trackingNumber.split("?")[0]}`;
 }
 
 if (!trackingNumber) {
-  displayError("No tracking number provided. Please add ?trackingid=xxx to the URL.");
+  displayError(
+    "No tracking number provided. Please add ?trackingid=xxx to the URL.",
+  );
   throw new Error("No tracking number provided");
 }
 
@@ -67,19 +72,15 @@ async function fetchWithRetry(url, options, retries = 5) {
   try {
     const response = await fetch(url, options);
     if (response.ok) return response;
-    
+
     // Only retry on 500-series errors
     if (response.status >= 500 && retries > 0) {
       await delay(100);
       return fetchWithRetry(url, options, retries - 1);
     }
-    
+
     throw new Error(`HTTP error! status: ${response.status}`);
   } catch (error) {
-    if (retries > 0) {
-      await delay(100);
-      return fetchWithRetry(url, options, retries - 1);
-    }
     throw error;
   }
 }
@@ -171,7 +172,7 @@ function renderTrackingData(data) {
     }).format(new Date(event.when));
 
     const notes = event.notes
-      ? `<div class="text-sm ${event.additional?.exceptionCode ? "text-red-600" : "text-black/60"} mt-4 text-xs italic">${event.notes}</div>`
+      ? `<div class="text-sm ${event.additional?.exceptionCode ? "text-red-600" : "text-black"} mt-1 text-xs italic">${event.notes}</div>`
       : "";
 
     eventDiv.innerHTML += `
@@ -179,8 +180,8 @@ function renderTrackingData(data) {
                   <div class="absolute -left-8 -ml-[4px] top-1/2 w-[7px] h-[7px] -translate-y-1/2 rounded-full bg-black"></div>
                   <div class="text-xs text-black/60">${date}</div>
             </div>
-            <div class="mt-4">${event.what}</div>
-            <div class="mt-1 text-xs">${event.where}</div>
+            <div class="mt-1 text-xs text-black/60">${event.where}</div>
+            <div class="mt-4 text-base">${event.what}</div>
             ${notes}
         `;
 

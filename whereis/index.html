@@ -53,9 +53,11 @@
         <link rel="stylesheet" href="/css/styles.css" />
     </head>
 
-    <body class="font-['iA_Writer_Quattro'] leading-relaxed max-w-xl mx-auto min-h-screen flex flex-col pt-4 px-4">
+    <body
+        class="font-['iA_Writer_Quattro'] leading-relaxed max-w-xl mx-auto min-h-screen flex flex-col pt-4 px-4"
+    >
         <!-- Logo always visible -->
-        <div class="flex justify-end mb-16">
+        <div class="flex justify-center mt-4 mb-16">
             <svg
                 class="w-9 h-9"
                 width="100%"
@@ -123,16 +125,20 @@
 
         <!-- Main area that grows to push footer down -->
         <div class="flex-grow">
-            <div id="loading" class="text-center py-12">Loading tracking information...</div>
+            <div id="loading" class="text-center py-12">
+                Loading tracking data ...
+            </div>
 
-            <div id="main-content" style="display: none;">
+            <div id="main-content" style="display: none">
                 <div class="mb-12 space-y-6">
                     <div class="pt-12">
-                        <h1 class="text-3xl font-bold"><div id="status"></div></h1>
+                        <h1 class="text-4xl font-bold tracking-tight">
+                            <div id="status"></div>
+                        </h1>
                     </div>
                     <div class="grid grid-cols-2 gap-8 text-sm">
                         <div>
-                            <div class="uppercase mb-1 text-black/60">Tracking ID</div>
+                            <div class="uppercase mb-1 text-black/60">ID</div>
                             <div id="tracking-num"></div>
                         </div>
                         <div>
@@ -156,7 +162,7 @@
 
         <!-- Footer always at bottom -->
         <footer class="py-8 text-center text-xs">
-            v0.1.0 ~ © 2025 EagleOne Holdings
+            v0.1.0 ~ ©2025 EagleOne Holdings
         </footer>
 
         <script src="/js/fetch-api.js"></script>
