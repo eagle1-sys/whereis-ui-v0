@@ -1,0 +1,60 @@
+{
+  "_jsxRuntime.module-CBr80xu0.js": {
+    "file": "assets/jsxRuntime.module-CBr80xu0.js",
+    "name": "jsxRuntime.module",
+    "imports": [
+      "_preact.module-B5DG9wGp.js"
+    ]
+  },
+  "_preact.module-B5DG9wGp.js": {
+    "file": "assets/preact.module-B5DG9wGp.js",
+    "name": "preact.module"
+  },
+  "_signals.module-CWNDFXwB.js": {
+    "file": "assets/signals.module-CWNDFXwB.js",
+    "name": "signals.module",
+    "imports": [
+      "_preact.module-B5DG9wGp.js"
+    ]
+  },
+  "fresh:client-entry": {
+    "file": "assets/client-entry-Cjd2iXaX.js",
+    "name": "client-entry",
+    "src": "fresh:client-entry",
+    "isEntry": true,
+    "imports": [
+      "_preact.module-B5DG9wGp.js",
+      "_signals.module-CWNDFXwB.js"
+    ],
+    "css": [
+      "assets/client-entry-C-R5Vn3a.css"
+    ]
+  },
+  "islands/JsonViewer.tsx": {
+    "file": "assets/fresh-island__JsonViewer-4T7qEA6U.js",
+    "name": "fresh-island__JsonViewer",
+    "src": "islands/JsonViewer.tsx",
+    "isEntry": true,
+    "imports": [
+      "_signals.module-CWNDFXwB.js",
+      "_jsxRuntime.module-CBr80xu0.js",
+      "_preact.module-B5DG9wGp.js"
+    ]
+  },
+  "islands/LocalDate.tsx": {
+    "file": "assets/fresh-island__LocalDate-OaitGR-G.js",
+    "name": "fresh-island__LocalDate",
+    "src": "islands/LocalDate.tsx",
+    "isEntry": true,
+    "imports": [
+      "_jsxRuntime.module-CBr80xu0.js",
+      "_preact.module-B5DG9wGp.js"
+    ]
+  },
+  "islands/TrackingForm.tsx": {
+    "file": "assets/fresh-island__TrackingForm-l0sNRNKZ.js",
+    "name": "fresh-island__TrackingForm",
+    "src": "islands/TrackingForm.tsx",
+    "isEntry": true
+  }
+}

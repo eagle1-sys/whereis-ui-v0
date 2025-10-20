@@ -1,58 +1,16 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>EG1: Where is it?</title>
+import { useSignal } from "@preact/signals";
+import { Head } from "fresh/runtime";
+import { define } from "../utils.ts";
 
-        <link rel="preconnect" href="https://cdn.eg1.io" crossorigin />
-        <link rel="icon" href="https://cdn.eg1.io/images/favicon.png" />
-        <link
-            rel="apple-touch-icon"
-            href="https://cdn.eg1.io/images/eagle1-touch-icon-152px.png"
-        />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
-        <meta name="HandheldFriendly" content="true" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="google" content="notranslate" />
-        <meta name="robots" content="noindex, nofollow" />
-        <meta name="author" content="Eagle1" />
-        <meta
-            name="description"
-            content="Eagle1: One API to standardize and connect global logistics data."
-        />
-        <meta property="og:url" content="https://eagl.wine" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="EG1: Where is it?" />
-        <meta
-            property="og:description"
-            content="One API to standardize and connect global logistics data."
-        />
-        <meta
-            property="og:image"
-            content="https://cdn.eg1.io/images/eg1-social-1600px.png"
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta property="twitter:domain" content="eg1.io" />
-        <meta property="twitter:url" content="https://eg1.io" />
-        <meta name="twitter:title" content="EG1: Where is it?" />
-        <meta
-            name="twitter:description"
-            content="One API to standardize and connect global logistics data."
-        />
-        <meta
-            name="twitter:image"
-            content="https://cdn.eg1.io/images/eg1-social-1600px.png"
-        />
+export default define.page(function Home(ctx) {
+  const count = useSignal(3);
 
-        <link rel="stylesheet" href="/css/styles.css?v=0.2.0" />
-    </head>
-
-    <body
-        class="font-['iA_Writer_Quattro'] leading-relaxed max-w-xl mx-auto min-h-screen flex flex-col pt-4 px-4"
-    >
+  return (
+    <>
+      <Head>
+        <script src="/submit.js"></script>
+      </Head>
+      <div class="font-['iA_Writer_Quattro'] leading-relaxed max-w-xl mx-auto min-h-screen flex flex-col pt-4 px-4">
         <div class="flex justify-center mt-4 mb-16">
             <svg
                 class="w-9 h-9"
@@ -118,7 +76,7 @@
                 </g>
             </svg>
         </div>
-        <main class="flex-grow w-full py-12">
+        <div class="flex-grow w-full py-12">
             <div class="relative">
                 <div class="space-y-6">
                     <h1 class="text-4xl font-['Fugaz_One'] mb-32">
@@ -127,7 +85,6 @@
                     <form
                         id="tracking-form"
                         class="space-y-4"
-                        onsubmit="handleSubmit(event)"
                     >
                         <div class="relative">
                             <input
@@ -137,7 +94,6 @@
                                 class="w-full p-2 pr-10 border-b-2 border-black focus:outline-none placeholder:text-black/30 rounded-none"
                                 placeholder="Example: fdx-123412341234"
                                 required
-                                oninput="this.value = this.value.split('-').map((part, i) => i === 0 ? part.toLowerCase() : part).join('-')"
                             />
                             <button
                                 type="submit"
@@ -150,26 +106,12 @@
                     </form>
                 </div>
             </div>
-        </main>
+        </div>
 
         <footer class="pb-8 text-center text-xs">
-            v0.2.0 ~ ©2025 EagleOne Holdings
+            v0.3 ~ ©2025 EagleOne Holdings
         </footer>
-
-        <script>
-            function handleSubmit(event) {
-                event.preventDefault();
-                const rawValue = document
-                    .getElementById("tracking-input")
-                    .value.trim();
-                const input = rawValue
-                    .split("-")
-                    .map((part, i) => (i === 0 ? part.toLowerCase() : part))
-                    .join("-");
-                if (input) {
-                    window.location.href = `/whereis/?id=${input}`;
-                }
-            }
-        </script>
-    </body>
-</html>
+      </div>
+    </>
+  );
+});

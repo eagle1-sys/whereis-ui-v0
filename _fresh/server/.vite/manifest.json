@@ -1,0 +1,30 @@
+{
+  "fresh-route::_index": {
+    "file": "assets/_fresh-route___index-BfSo0-4D.mjs",
+    "name": "_fresh-route___index",
+    "src": "fresh-route::_index",
+    "isDynamicEntry": true,
+    "imports": [
+      "fresh:server_entry"
+    ]
+  },
+  "fresh-route::_whereis_index": {
+    "file": "assets/_fresh-route___whereis_index-BXq2gIbn.mjs",
+    "name": "_fresh-route___whereis_index",
+    "src": "fresh-route::_whereis_index",
+    "isDynamicEntry": true,
+    "imports": [
+      "fresh:server_entry"
+    ]
+  },
+  "fresh:server_entry": {
+    "file": "server-entry.mjs",
+    "name": "server-entry",
+    "src": "fresh:server_entry",
+    "isEntry": true,
+    "dynamicImports": [
+      "fresh-route::_index",
+      "fresh-route::_whereis_index"
+    ]
+  }
+}

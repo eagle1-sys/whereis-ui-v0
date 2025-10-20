@@ -1,0 +1,9 @@
+{
+  "name": "whereis-ui-v0",
+  "compatibility_date": "2025-09-01",
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "main": "./server.js"
+}

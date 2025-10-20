@@ -1,9 +1,18 @@
-# IDE
-.vscode
-.idea
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
-node_modules
-input.css
+# Fresh build directory
+dist/
+# npm + other dependencies
+node_modules/
+vendor/
+#deployment directory
+.vscode/
+.wrangler/
 
 # OS
 .DS_Store
