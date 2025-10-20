@@ -13,6 +13,7 @@ vendor/
 #deployment directory
 .vscode/
 .wrangler/
+.vite
 
 # OS
 .DS_Store
