@@ -94,6 +94,7 @@ export default define.page(function Home(ctx) {
                                 class="w-full p-2 pr-10 border-b-2 border-black focus:outline-none placeholder:text-black/30 rounded-none"
                                 placeholder="Example: fdx-123412341234"
                                 required
+                                spellcheck="false"
                             />
                             <button
                                 type="submit"
