@@ -46,7 +46,7 @@ export default define.page(function WhereIs(ctx) {
           </div>
         </div>
         <footer class="py-8 text-center text-xs">
-          v0.3.0 ~ ©2025 EagleOne Holdings
+            <a href="https://github.com/eagle1-sys/whereis-ui-v0" target="_blank" class="underline hover:no-underline">v0.3.1</a> ~ Powered by <a href="https://github.com/eagle1-sys" target="_blank" class="underline hover:no-underline">Eagle1 Whereis</a>
         </footer>
       </div>
     );
@@ -184,7 +184,7 @@ export default define.page(function WhereIs(ctx) {
 
       {/* Footer always at bottom */}
       <footer class="py-8 text-center text-xs">
-        <a href="https://github.com/eagle1-sys/whereis-ui-v0" target="_blank" class="underline hover:no-underline">v0.3</a> ~ Powered by <a href="https://github.com/eagle1-sys" target="_blank" class="underline hover:no-underline">Eagle1 Whereis</a>
+        <a href="https://github.com/eagle1-sys/whereis-ui-v0" target="_blank" class="underline hover:no-underline">v0.3.1</a> ~ Powered by <a href="https://github.com/eagle1-sys" target="_blank" class="underline hover:no-underline">Eagle1 Whereis</a>
       </footer>
 
       <div class="h-0 text-transparent overflow-hidden">
