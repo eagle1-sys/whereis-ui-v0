@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       const value = input.value.trim();
       if (value) {
-        window.location.href = '/whereis?id=' + encodeURIComponent(value);
+        window.location.href = '/' + value;
       }
     });
   }

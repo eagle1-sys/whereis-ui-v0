@@ -1,4 +1,4 @@
-import { define } from "../..//utils.ts";
+import { define } from "../../utils.ts";
 import JsonViewer from "../../islands/JsonViewer.tsx";
 import LocalDate from "../../islands/LocalDate.tsx";
 import { Head } from "fresh/runtime";
@@ -42,7 +42,7 @@ export default define.page(function WhereIs(ctx) {
           <div class="text-center">
             <h1 class="text-2xl font-bold mb-4">No tracking data found</h1>
             <p class="text-gray-600">Please provide a valid tracking ID in the URL.</p>
-            <p class="text-sm text-gray-500 mt-2">Example: /whereis?id=xxx</p>
+            <p class="text-sm text-gray-500 mt-2">Example: /fdx-123412341234</p>
           </div>
         </div>
         <footer class="py-8 text-center text-xs">

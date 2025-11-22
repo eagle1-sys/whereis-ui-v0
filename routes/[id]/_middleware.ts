@@ -1,0 +1,70 @@
+import { define } from "../../utils.ts";
+import { getEnv } from "../../utils/env.ts";
+
+export default define.middleware(async (ctx) => {
+
+  const url = ctx.url;
+  // Get id from route parameter instead of query parameter
+  const id = ctx.params.id;
+
+  if (!id) {
+    return new Response("Missing tracking ID in URL", { status: 400 });
+  }
+
+  // Get environment variables
+  const apiBaseUrl = getEnv("API_BASE_URL");
+  const apiToken = getEnv("API_TOKEN");
+
+  if (!apiToken) {
+    console.error("API_TOKEN environment variable is not set");
+    return new Response("API configuration error", { status: 500 });
+  }
+
+  // First decode if needed
+  const decodedId = id.includes('%') ? decodeURIComponent(id) : id;
+  
+  // Backwards compatibility fix for old URLs with encoded ? and &
+
+  // Build tracking ID - this will be sent to the API
+  let trackingId = id + (url.searchParams.toString() ? '?' + url.searchParams.toString() : '');
+
+  // Normalize the tracking ID by fixing ? and & issues
+  let normalizedId = normalizeId(decodedId);
+
+  // If the URL [id] doesn't match what we'll send to the API, redirect
+  if (normalizedId !== decodedId) {
+    // Don't encode the entire ID - ? and & should remain unencoded in the URL path
+    return Response.redirect(new URL(`/${normalizedId}`, url.origin), 301);
+  }
+
+  const startTime = performance.now();
+  
+  const response = await fetch(`${apiBaseUrl}/whereis/${trackingId}`, {
+      method: "GET",
+      headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${apiToken}`,
+      },
+  });
+
+  const endTime = performance.now();
+
+  const data = await response.json();
+  ctx.state.data = data;
+  ctx.state.APItime = (endTime - startTime).toFixed(2);
+
+  return await ctx.next();
+});
+
+function normalizeId(id: string): string {
+    const parts = id.split(/[?&]/);
+    const searchParams = new URLSearchParams();
+    
+    for (let i = 1; i < parts.length; i++) {
+        const [key, value = ''] = parts[i].split('=');
+        searchParams.append(key, value);
+    }
+    
+    const queryString = searchParams.toString();
+    return queryString ? `${parts[0]}?${queryString}` : parts[0];
+}
