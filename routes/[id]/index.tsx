@@ -15,9 +15,13 @@ export default define.page(function WhereIs(ctx) {
     return <NotFound />;
   }
 
-  // Get the latest event and status
+  // Get the highest major event (status code ending in 00)
+  const highestMajorEvent = data.events
+    .filter((e) => e.status && e.status.toString().endsWith("00"))
+    .sort((a, b) => Number(b.status) - Number(a.status))[0];
+
   const latestEvent = data.events[data.events.length - 1];
-  const latestStatus = latestEvent.what;
+  const latestStatus = (highestMajorEvent || latestEvent).what;
 
   // Check if last event has an exception
   const hasException = latestEvent.additional?.exceptionCode;
@@ -41,7 +45,8 @@ export default define.page(function WhereIs(ctx) {
 
         <div id="main-content" style="display: block;">
           <div class="mb-12 space-y-6">
-            <div class="pt-12">
+            <div class="pt-12 text-sm">
+              <div class="uppercase mb-1 text-black/60">Last Major Milestone</div>
               <h1 class="text-4xl font-bold tracking-tight">
                 <div id="status">{latestStatus}</div>
               </h1>
