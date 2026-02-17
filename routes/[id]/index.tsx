@@ -3,6 +3,7 @@ import JsonViewer from "../../islands/JsonViewer.tsx";
 import NotFound from "../../components/NotFound.tsx";
 import EventItem from "../../components/EventItem.tsx";
 import Logo from "../../components/Logo.tsx";
+import Footer from "../../components/Footer.tsx";
 import { Head } from "fresh/runtime";
 
 export default define.page(function WhereIs(ctx) {
@@ -86,10 +87,7 @@ export default define.page(function WhereIs(ctx) {
         </div>
       </div>
 
-      {/* Footer always at bottom */}
-      <footer class="py-8 text-center text-xs">
-        <a href="https://github.com/eagle1-sys/whereis-ui-v0" target="_blank" class="underline hover:no-underline">v0.3.1</a> ~ Powered by <a href="https://github.com/eagle1-sys" target="_blank" class="underline hover:no-underline">Eagle1 Whereis</a>
-      </footer>
+      <Footer />
 
       <div class="h-0 text-transparent overflow-hidden">
         <span class="font-bold"></span>

@@ -1,5 +1,6 @@
 import { Head } from "fresh/runtime";
 import Logo from "./Logo.tsx";
+import Footer from "./Footer.tsx";
 
 export default function NotFound() {
   return (
@@ -19,9 +20,7 @@ export default function NotFound() {
           <p class="text-sm text-gray-500 mt-2">Example: /fdx-123412341234</p>
         </div>
       </div>
-      <footer class="py-8 text-center text-xs">
-        <a href="https://github.com/eagle1-sys/whereis-ui-v0" target="_blank" class="underline hover:no-underline">v0.3.1</a> ~ Powered by <a href="https://github.com/eagle1-sys" target="_blank" class="underline hover:no-underline">Eagle1 Whereis</a>
-      </footer>
+      <Footer />
     </div>
   );
 }

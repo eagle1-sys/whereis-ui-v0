@@ -2,6 +2,7 @@ import { useSignal } from "@preact/signals";
 import { Head } from "fresh/runtime";
 import { define } from "../utils.ts";
 import Logo from "../components/Logo.tsx";
+import Footer from "../components/Footer.tsx";
 
 export default define.page(function Home(ctx) {
   const count = useSignal(3);
@@ -48,9 +49,7 @@ export default define.page(function Home(ctx) {
             </div>
         </div>
 
-        <footer class="pb-8 text-center text-xs">
-            <a href="https://github.com/eagle1-sys/whereis-ui-v0" target="_blank" class="underline hover:no-underline">v0.3.1</a> ~ Powered by <a href="https://github.com/eagle1-sys" target="_blank" class="underline hover:no-underline">Eagle1 Whereis</a>
-        </footer>
+        <Footer class="pb-8" />
       </div>
     </>
   );
