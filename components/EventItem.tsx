@@ -12,14 +12,15 @@ interface EventItemProps {
     };
   };
   index: number;
+  isLast?: boolean;
 }
 
-export default function EventItem({ event, index }: EventItemProps) {
+export default function EventItem({ event, index, isLast = false }: EventItemProps) {
   const eventCode = event.status;
   const isMajorEvent = eventCode && eventCode.toString().endsWith("00");
 
   return (
-    <div class="relative pl-8 pb-12">
+    <div class={`relative pl-8 pb-12 ${isLast ? '' : 'border-l border-black/10'}`}>
       <div class="relative">
         <div class="absolute -left-8 -ml-[12px] -top-1 text-2xl bg-white font-['Carattere'] text-black w-6 h-8 flex items-center justify-center">
           {index + 1}

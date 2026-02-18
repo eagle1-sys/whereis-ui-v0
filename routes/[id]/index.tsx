@@ -78,10 +78,34 @@ export default define.page(function WhereIs(ctx) {
             </div>
           )}
 
-          <div id="timeline" class="border-l border-black/10 ml-4">
-            {data.events.map((event, index) => (
-              <EventItem event={event} index={index} />
-            ))}
+          <div id="timeline" class="pl-4 [&:has(details)>div:first-child]:pb-4 mt-12 pt-12 border-t border-black/10">
+            {/* First event */}
+            <EventItem event={data.events[0]} index={0} isLast={data.events.length === 1} />
+
+            {/* Collapsible middle events (only if more than 3 events) */}
+            {data.events.length > 3 && (
+              <details class="group inline">
+                <summary class="relative pl-8 pb-10 pt-5 cursor-pointer select-none list-none border-l border-dashed border-black/10 group-open:border-solid w-fit">
+                  <span class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded text-xs text-black/80 inline-block w-44 text-center">
+                    <span class="group-open:hidden">Show full history</span>
+                    <span class="hidden group-open:inline">Hide full history</span>
+                  </span>
+                </summary>
+                {data.events.slice(1, -1).map((event, i) => (
+                  <EventItem event={event} index={i + 1} />
+                ))}
+              </details>
+            )}
+
+            {/* Middle event shown directly when exactly 3 events */}
+            {data.events.length === 3 && (
+              <EventItem event={data.events[1]} index={1} />
+            )}
+
+            {/* Last event (if more than 1 event) */}
+            {data.events.length > 1 && (
+              <EventItem event={data.events[data.events.length - 1]} index={data.events.length - 1} isLast />
+            )}
           </div>
 
           {/* JSON Toggle Button */}
