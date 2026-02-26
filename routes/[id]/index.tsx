@@ -5,6 +5,7 @@ import EventItem from "../../components/EventItem.tsx";
 import Logo from "../../components/Logo.tsx";
 import Footer from "../../components/Footer.tsx";
 import { Head } from "fresh/runtime";
+import { getEnv } from "../../utils/env.ts";
 
 export default define.page(function WhereIs(ctx) {
   const data = ctx.state.data;
@@ -25,6 +26,8 @@ export default define.page(function WhereIs(ctx) {
 
   // Check if last event has an exception
   const hasException = latestEvent.additional?.exceptionCode;
+  const ogUrl = getEnv("BASE_URL") ? getEnv("BASE_URL") : "https://whereis.eg1.io";
+  
 
   return (
     <div class="font-['iA_Writer_Quattro'] leading-relaxed max-w-xl mx-auto min-h-screen flex flex-col pt-4 px-4">
@@ -33,6 +36,9 @@ export default define.page(function WhereIs(ctx) {
         <title> → {data.entity.id}</title>
         <meta property="og:title" content={`→ ${data.entity.id}`} />
         <meta name="twitter:title" content={`→ ${data.entity.id}`} />
+        <meta property="og:url" content={`${ogUrl}/${data.entity.id}`} />
+        <meta name="twitter:url" content={`${ogUrl}/${data.entity.id}`} />
+       </
       </Head>
       <div class="flex justify-center mt-4 mb-16">
         <a href="/" style="display:none;" class="!inline-block">
