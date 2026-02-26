@@ -33,7 +33,6 @@ export default define.page(function Home(ctx) {
                                 name="tracking-input"
                                 class="w-full p-2 pr-10 border-b-2 border-black focus:outline-none placeholder:text-black/30 rounded-none"
                                 placeholder="Example: fdx-123412341234"
-                                required
                                 spellcheck="false"
                             />
                             <button
@@ -44,6 +43,7 @@ export default define.page(function Home(ctx) {
                                 →
                             </button>
                         </div>
+                        <p id="validation-error" class="text-red-500 text-sm hidden"></p>
                     </form>
                 </div>
             </div>
