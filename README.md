@@ -76,6 +76,7 @@ Add the following variables to your worker directly from the Cloudflare dashboar
 
 - `API_BASE_URL`
 - `API_TOKEN`
+- `BASE_URL`
 
 ## Technologies Used
 

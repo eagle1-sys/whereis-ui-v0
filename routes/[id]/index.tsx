@@ -31,6 +31,8 @@ export default define.page(function WhereIs(ctx) {
       
       <Head>
         <title> → {data.entity.id}</title>
+        <meta property="og:title" content={`→ ${data.entity.id}`} />
+        <meta name="twitter:title" content={`→ ${data.entity.id}`} />
       </Head>
       <div class="flex justify-center mt-4 mb-16">
         <a href="/" style="display:none;" class="!inline-block">
