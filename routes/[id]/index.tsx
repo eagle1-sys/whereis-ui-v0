@@ -38,7 +38,6 @@ export default define.page(function WhereIs(ctx) {
         <meta name="twitter:title" content={`→ ${data.entity.id}`} />
         <meta property="og:url" content={`${ogUrl}/${data.entity.id}`} />
         <meta name="twitter:url" content={`${ogUrl}/${data.entity.id}`} />
-       </
       </Head>
       <div class="flex justify-center mt-4 mb-16">
         <a href="/" style="display:none;" class="!inline-block">
