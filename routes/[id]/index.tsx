@@ -6,6 +6,7 @@ import Logo from "../../components/Logo.tsx";
 import Footer from "../../components/Footer.tsx";
 import { Head } from "fresh/runtime";
 import { getEnv } from "../../utils/env.ts";
+import carriers from "../../utils/carriers.json" with { type: "json" };
 
 export default define.page(function WhereIs(ctx) {
   const data = ctx.state.data;
@@ -34,6 +35,14 @@ export default define.page(function WhereIs(ctx) {
   // Check if last event has an exception
   const hasException = latestEvent.additional?.exceptionCode;
   const ogUrl = getEnv("BASE_URL") ? getEnv("BASE_URL") : "https://whereis.eg1.io";
+
+  // Build carrier tracking URL
+  const trackingId = data.entity.id;
+  const prefix = trackingId.split('-')[0];
+  const payload = trackingId.slice(prefix.length + 1);
+  const carrierConfig = carriers[prefix as keyof typeof carriers];
+  const carrierTrackingUrl = carrierConfig ? carrierConfig.trackingUrl.replace('{id}', payload) : null;
+  const carrierName = carrierConfig ? carrierConfig.name : null;
   
 
   return (
@@ -90,7 +99,15 @@ export default define.page(function WhereIs(ctx) {
               </div>
               <div>
                 <div class="uppercase mb-1"></div>
-                <div></div>
+                <div>
+              {carrierTrackingUrl && (
+                <div class="col-span-2">
+                  <div class="uppercase mb-1 text-black/60">Carrier Tracking URL</div>
+                  <a href={carrierTrackingUrl} target="_blank" rel="noopener noreferrer" class="text-black/80 underline underline-offset-2 hover:text-black">
+                    {carrierName} →
+                  </a>
+                </div>
+              )}</div>
               </div>
               <div id="origin-container" style={`display: ${data.entity.additional?.origin ? 'block' : 'none'};`}>
                 <div class="uppercase mb-1 text-black/60">From</div>

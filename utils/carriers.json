@@ -1,0 +1,10 @@
+{
+  "fdx": {
+    "name": "FedEx",
+    "trackingUrl": "https://www.fedex.com/fedextrack/?trknbr={id}"
+  },
+  "sfex": {
+    "name": "SF Express",
+    "trackingUrl": "https://www.aftership.com/track/sf-express/{id}"
+  }
+}
