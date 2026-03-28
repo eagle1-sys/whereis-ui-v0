@@ -129,7 +129,7 @@ export default define.page(function WhereIs(ctx) {
       <div class="h-0 text-transparent overflow-hidden">
         <span class="font-bold"></span>
         <span class="italic"></span>
-        <span class="font-['Carattere']"></span>
+        <span class="font-['Dancing_Script']"></span>
       </div>
     </div>
   );

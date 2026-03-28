@@ -22,7 +22,7 @@ export default function EventItem({ event, index, isLast = false }: EventItemPro
   return (
     <div class={`relative pl-8 pb-12 ${isLast ? '' : 'border-l border-black/10'}`}>
       <div class="relative">
-        <div class="absolute -left-8 -ml-[12px] -top-1 text-2xl bg-white font-['Carattere'] text-black w-6 h-8 flex items-center justify-center">
+        <div class="absolute -left-8 -ml-[12px] -top-1 text-xl bg-white font-['Dancing_Script'] text-black w-6 h-8 flex items-center justify-center">
           {index + 1}
         </div>
         <LocalDate date={event.when} class="text-xs text-black/60" />
