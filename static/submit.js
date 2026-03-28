@@ -26,20 +26,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const afterPrefix = value.slice(prefix.length + 1);
-
-    if (afterPrefix.length < 12) {
-      return 'Invalid Tracking ID — too short.';
-    }
+    // Extract base payload (before query params like ?phonenum=)
+    const basePayload = afterPrefix.split('?')[0];
 
     if (prefix === 'sfex') {
-      if (!afterPrefix.startsWith('SF')) {
-        return 'Invalid SFExpress ID.';
+      if (!basePayload.startsWith('SF')) {
+        return "Invalid SFExpress ID: must be 'SF' followed by 13 digits.";
+      }
+      if (basePayload.length < 15) {
+        return 'Invalid SFExpress ID — too short.';
+      }
+      if (!/^SF\d+$/.test(basePayload)) {
+        return 'Invalid SFExpress ID: digits only after \'SF\'.';
       }
       if (!value.includes('?phonenum=') || value.split('?phonenum=')[1] === '') {
         return 'SFExpress ID requires a phone number.';
       }
+    } else {
+      if (basePayload.length < 10) {
+        return 'Invalid FedEx ID — too short.';
+      }
+      if (!/^\d+$/.test(basePayload)) {
+        return 'Invalid FedEx ID — must contain only digits after fdx-.';
+      }
     }
-
 
     return null;
   }
@@ -66,5 +76,18 @@ document.addEventListener('DOMContentLoaded', function() {
         .join('-');
       clearError();
     });
+  }
+
+  // Check URL params for validation error (redirect from [id] middleware)
+  const urlParams = new URLSearchParams(window.location.search);
+  const errorParam = urlParams.get('error');
+  const idParam = urlParams.get('id');
+  if (errorParam) {
+    if (idParam && input) {
+      input.value = idParam;
+    }
+    showError(errorParam);
+    // Clean URL without reloading
+    window.history.replaceState({}, '', '/');
   }
 });

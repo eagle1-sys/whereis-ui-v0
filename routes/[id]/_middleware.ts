@@ -37,6 +37,15 @@ export default define.middleware(async (ctx) => {
     return Response.redirect(new URL(`/${normalizedId}`, url.origin), 301);
   }
 
+  // Validate the tracking ID format before calling the API
+  const validationError = validateTrackingId(normalizedId, url.searchParams);
+  if (validationError) {
+    // Reconstruct what the user entered (path + query) for the input field
+    const originalInput = trackingId;
+    const params = new URLSearchParams({ error: validationError, id: originalInput });
+    return Response.redirect(new URL(`/?${params}`, url.origin), 302);
+  }
+
   const startTime = performance.now();
   
   const response = await fetch(`${apiBaseUrl}/whereis/${trackingId}`, {
@@ -67,4 +76,40 @@ function normalizeId(id: string): string {
     
     const queryString = searchParams.toString();
     return queryString ? `${parts[0]}?${queryString}` : parts[0];
+}
+
+function validateTrackingId(id: string, searchParams: URLSearchParams): string | null {
+  if (!id) return "Tracking ID is required.";
+
+  const prefix = id.split('-')[0];
+  if (prefix !== 'fdx' && prefix !== 'sfex') {
+    return "Tracking ID must start with fdx- (FedEx) or sfex- (SFExpress).";
+  }
+
+  const payload = id.slice(prefix.length + 1);
+
+  if (prefix === 'sfex') {
+    if (!payload.startsWith('SF')) {
+      return "Invalid SFExpress ID: must be 'SF' followed by 13 digits.";
+    }
+    if (payload.length < 15) {
+      return "Invalid SFExpress ID — too short.";
+    }
+    if (!/^SF\d+$/.test(payload)) {
+      return "Invalid SFExpress ID: digits only after 'SF'.";
+    }
+    const phonenum = searchParams.get('phonenum');
+    if (!phonenum) {
+      return "SFExpress ID requires a phone number.";
+    }
+  } else {
+    if (payload.length < 10) {
+      return "Invalid FedEx ID — too short.";
+    }
+    if (!/^\d+$/.test(payload)) {
+      return "Invalid FedEx ID — must contain only digits after fdx-.";
+    }
+  }
+
+  return null;
 }
