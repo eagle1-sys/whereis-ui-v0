@@ -115,13 +115,14 @@ export default define.page(function WhereIs(ctx) {
             )}
           </div>
 
-          {/* JSON Toggle Button */}
-          <JsonViewer 
-            data={data} 
-            processingTime={APItime || 0} 
-          />
         </div>
       </div>
+
+      {/* JSON Toggle Button */}
+      <JsonViewer 
+        data={data} 
+        processingTime={APItime || 0} 
+      />
 
       <Footer />
 
