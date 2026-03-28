@@ -24,6 +24,13 @@ export default define.page(function WhereIs(ctx) {
   const latestEvent = data.events[data.events.length - 1];
   const latestStatus = (highestMajorEvent || latestEvent).what;
 
+  // Check if delivered (3500 event exists)
+  const deliveredEvent = data.events.find((e) => e.status === 3500);
+  const isDelivered = !!deliveredEvent;
+  const deliveryDays = isDelivered
+    ? Math.round((new Date(deliveredEvent.when).getTime() - new Date(data.events[0].when).getTime()) / (1000 * 60 * 60 * 24))
+    : 0;
+
   // Check if last event has an exception
   const hasException = latestEvent.additional?.exceptionCode;
   const ogUrl = getEnv("BASE_URL") ? getEnv("BASE_URL") : "https://whereis.eg1.io";
@@ -53,10 +60,28 @@ export default define.page(function WhereIs(ctx) {
         <div id="main-content" style="display: block;">
           <div class="mb-12 space-y-6">
             <div class="pt-12 text-sm">
-              <div class="uppercase mb-1 text-black/60">Last Major Milestone</div>
+              {!isDelivered && <div class="uppercase mb-1 text-black/60">Last Major Milestone</div>}
               <h1 class="text-4xl font-bold tracking-tight">
-                <div id="status">{latestStatus}</div>
+                <div id="status" class="flex flex-col sm:flex-row sm:items-end gap-1.5 sm:gap-3 relative">
+                  {isDelivered && (
+                    <svg class="sm:absolute -left-11 top-0.5 w-10 h-10 text-green-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                  {latestStatus}
+                  {isDelivered && (
+                    <div>
+                      <div class="text-2xl hidden sm:block">
+                        ({deliveryDays} {deliveryDays === 1 ? 'day' : 'days'})
+                      </div>
+                      <div class="text-xl sm:hidden">
+                        {deliveryDays} {deliveryDays === 1 ? 'day' : 'days'}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </h1>
+              
             </div>
             <div class="grid grid-cols-2 gap-8 text-sm">
               <div>
