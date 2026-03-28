@@ -14,7 +14,7 @@ export default define.page(function WhereIs(ctx) {
 
   // Add safety checks
   if (!data || !data.events || !Array.isArray(data.events)) {
-    return <NotFound />;
+    return <NotFound data={data} />;
   }
 
   // Get the highest major event (status code ending in 00)
