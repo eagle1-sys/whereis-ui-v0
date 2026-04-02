@@ -68,7 +68,7 @@ export default define.page(function WhereIs(ctx) {
 
         <div id="main-content" style="display: block;">
           <div class="mb-12 space-y-6">
-            <div class="pt-12">
+            <div class="pt-12 text-sm">
               {!isDelivered && <div class="uppercase mb-1 text-black/60">Last Major Event</div>}
               <h1 class={isDelivered ? "text-4xl font-bold tracking-tight text-green-500" : "text-4xl font-bold tracking-tight"}>
                 <div id="status" class="flex flex-col sm:flex-row sm:items-end gap-1.5 sm:gap-3 relative">
@@ -79,7 +79,7 @@ export default define.page(function WhereIs(ctx) {
 
               {isDelivered && (
                 <div>
-                  <div class="mt-1 text-sm">
+                  <div class="mt-1">
                     {deliveryDays} {deliveryDays === 1 ? 'day' : 'days'}
                   </div>
                 </div>
