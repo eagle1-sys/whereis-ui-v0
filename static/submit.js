@@ -20,16 +20,22 @@ document.addEventListener("DOMContentLoaded", function () {
       return "Tracking ID is required.";
     }
 
+    // Supported operator codes — keep in sync with utils/operators.ts.
+    const operatorCodes = ["fdx", "sfex", "eg1"];
     const prefix = value.split("-")[0];
-    if (prefix !== "fdx" && prefix !== "sfex") {
-      return "Tracking ID must start with fdx- (FedEx) or sfex- (SFExpress).";
+    if (!operatorCodes.includes(prefix)) {
+      return "Tracking ID must start with fdx- (FedEx), sfex- (SFExpress) or eg1- (Eagle1).";
     }
 
     const afterPrefix = value.slice(prefix.length + 1);
     // Extract base payload (before query params like ?phonenum=)
     const basePayload = afterPrefix.split("?")[0];
 
-    if (prefix === "sfex") {
+    if (prefix === "eg1") {
+      if (!basePayload) {
+        return "Invalid Eagle1 ID — missing tracking number.";
+      }
+    } else if (prefix === "sfex") {
       if (!basePayload.startsWith("SF")) {
         return "Invalid SFExpress ID: must be 'SF' followed by 13 digits.";
       }

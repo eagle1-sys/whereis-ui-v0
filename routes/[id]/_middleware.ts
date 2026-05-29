@@ -1,5 +1,6 @@
 import { define } from "../../utils.ts";
 import { getEnv } from "../../utils/env.ts";
+import { operatorCodes } from "../../utils/operators.ts";
 
 export default define.middleware(async (ctx) => {
   const url = ctx.url;
@@ -88,13 +89,17 @@ function validateTrackingId(
   if (!id) return "Tracking ID is required.";
 
   const prefix = id.split("-")[0];
-  if (prefix !== "fdx" && prefix !== "sfex") {
-    return "Tracking ID must start with fdx- (FedEx) or sfex- (SFExpress).";
+  if (!operatorCodes.includes(prefix)) {
+    return "Tracking ID must start with fdx- (FedEx), sfex- (SFExpress) or eg1- (Eagle1).";
   }
 
   const payload = id.slice(prefix.length + 1);
 
-  if (prefix === "sfex") {
+  if (prefix === "eg1") {
+    if (!payload) {
+      return "Invalid Eagle1 ID — missing tracking number.";
+    }
+  } else if (prefix === "sfex") {
     if (!payload.startsWith("SF")) {
       return "Invalid SFExpress ID: must be 'SF' followed by 13 digits.";
     }
