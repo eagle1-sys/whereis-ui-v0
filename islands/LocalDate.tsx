@@ -3,13 +3,15 @@ interface LocalDateProps {
   class?: string;
 }
 
-export default function LocalDate({ date, class: className = "" }: LocalDateProps) {
+export default function LocalDate(
+  { date, class: className = "" }: LocalDateProps,
+) {
   // Simple client-side formatting in user's timezone
   const formatLocalDate = (dateString: string) => {
     try {
       const dateObj = new Date(dateString);
       const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      
+
       return new Intl.DateTimeFormat("en-US", {
         timeZone: userTimezone,
         year: "2-digit",
@@ -23,12 +25,12 @@ export default function LocalDate({ date, class: className = "" }: LocalDateProp
     } catch (error) {
       // Fallback to UTC format if there's any error
       const dateObj = new Date(dateString);
-      return dateObj.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+      return dateObj.toISOString().replace("T", " ").slice(0, 19) + " UTC";
     }
   };
 
   return (
-    <div 
+    <div
       dateTime={date}
       class={className}
     >

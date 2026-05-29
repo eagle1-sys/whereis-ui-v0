@@ -2,7 +2,6 @@ import { define } from "../../utils.ts";
 import { getEnv } from "../../utils/env.ts";
 
 export default define.middleware(async (ctx) => {
-
   const url = ctx.url;
   // Get id from route parameter instead of query parameter
   const id = ctx.params.id;
@@ -21,12 +20,13 @@ export default define.middleware(async (ctx) => {
   }
 
   // First decode if needed
-  const decodedId = id.includes('%') ? decodeURIComponent(id) : id;
-  
+  const decodedId = id.includes("%") ? decodeURIComponent(id) : id;
+
   // Backwards compatibility fix for old URLs with encoded ? and &
 
   // Build tracking ID - this will be sent to the API
-  let trackingId = id + (url.searchParams.toString() ? '?' + url.searchParams.toString() : '');
+  let trackingId = id +
+    (url.searchParams.toString() ? "?" + url.searchParams.toString() : "");
 
   // Normalize the tracking ID by fixing ? and & issues
   let normalizedId = normalizeId(decodedId);
@@ -42,18 +42,21 @@ export default define.middleware(async (ctx) => {
   if (validationError) {
     // Reconstruct what the user entered (path + query) for the input field
     const originalInput = trackingId;
-    const params = new URLSearchParams({ error: validationError, id: originalInput });
+    const params = new URLSearchParams({
+      error: validationError,
+      id: originalInput,
+    });
     return Response.redirect(new URL(`/?${params}`, url.origin), 302);
   }
 
   const startTime = performance.now();
-  
+
   const response = await fetch(`${apiBaseUrl}/whereis/${trackingId}`, {
-      method: "GET",
-      headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${apiToken}`,
-      },
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${apiToken}`,
+    },
   });
 
   const endTime = performance.now();
@@ -66,30 +69,33 @@ export default define.middleware(async (ctx) => {
 });
 
 function normalizeId(id: string): string {
-    const parts = id.split(/[?&]/);
-    const searchParams = new URLSearchParams();
-    
-    for (let i = 1; i < parts.length; i++) {
-        const [key, value = ''] = parts[i].split('=');
-        searchParams.append(key, value);
-    }
-    
-    const queryString = searchParams.toString();
-    return queryString ? `${parts[0]}?${queryString}` : parts[0];
+  const parts = id.split(/[?&]/);
+  const searchParams = new URLSearchParams();
+
+  for (let i = 1; i < parts.length; i++) {
+    const [key, value = ""] = parts[i].split("=");
+    searchParams.append(key, value);
+  }
+
+  const queryString = searchParams.toString();
+  return queryString ? `${parts[0]}?${queryString}` : parts[0];
 }
 
-function validateTrackingId(id: string, searchParams: URLSearchParams): string | null {
+function validateTrackingId(
+  id: string,
+  searchParams: URLSearchParams,
+): string | null {
   if (!id) return "Tracking ID is required.";
 
-  const prefix = id.split('-')[0];
-  if (prefix !== 'fdx' && prefix !== 'sfex') {
+  const prefix = id.split("-")[0];
+  if (prefix !== "fdx" && prefix !== "sfex") {
     return "Tracking ID must start with fdx- (FedEx) or sfex- (SFExpress).";
   }
 
   const payload = id.slice(prefix.length + 1);
 
-  if (prefix === 'sfex') {
-    if (!payload.startsWith('SF')) {
+  if (prefix === "sfex") {
+    if (!payload.startsWith("SF")) {
       return "Invalid SFExpress ID: must be 'SF' followed by 13 digits.";
     }
     if (payload.length < 15) {
@@ -98,7 +104,7 @@ function validateTrackingId(id: string, searchParams: URLSearchParams): string |
     if (!/^SF\d+$/.test(payload)) {
       return "Invalid SFExpress ID: digits only after 'SF'.";
     }
-    const phonenum = searchParams.get('phonenum');
+    const phonenum = searchParams.get("phonenum");
     if (!phonenum) {
       return "SFExpress ID requires a phone number.";
     }

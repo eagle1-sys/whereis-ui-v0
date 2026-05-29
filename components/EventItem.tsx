@@ -15,12 +15,16 @@ interface EventItemProps {
   isLast?: boolean;
 }
 
-export default function EventItem({ event, index, isLast = false }: EventItemProps) {
+export default function EventItem(
+  { event, index, isLast = false }: EventItemProps,
+) {
   const eventCode = event.status;
   const isMajorEvent = eventCode && eventCode.toString().endsWith("00");
 
   return (
-    <div class={`relative pl-8 pb-12 ${isLast ? '' : 'border-l border-black/10'}`}>
+    <div
+      class={`relative pl-8 pb-12 ${isLast ? "" : "border-l border-black/10"}`}
+    >
       <div class="relative">
         <div class="absolute -left-8 -ml-[12px] -top-1 text-xl bg-white font-['Dancing_Script'] text-black w-6 h-8 flex items-center justify-center">
           {index + 1}
@@ -42,7 +46,9 @@ export default function EventItem({ event, index, isLast = false }: EventItemPro
       </div>
       {event.notes && (
         <div
-          class={`mt-1 text-xs italic ${event.additional?.exceptionCode ? "text-red-600" : "text-black"}`}
+          class={`mt-1 text-xs italic ${
+            event.additional?.exceptionCode ? "text-red-600" : "text-black"
+          }`}
         >
           {event.notes}
         </div>

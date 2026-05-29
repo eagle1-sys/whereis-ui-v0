@@ -29,27 +29,32 @@ export default define.page(function WhereIs(ctx) {
   const deliveredEvent = data.events.find((e) => e.status === 3500);
   const isDelivered = !!deliveredEvent;
   const deliveryDays = isDelivered
-    ? Math.round((new Date(deliveredEvent.when).getTime() - new Date(data.events[0].when).getTime()) / (1000 * 60 * 60 * 24))
+    ? Math.round(
+      (new Date(deliveredEvent.when).getTime() -
+        new Date(data.events[0].when).getTime()) / (1000 * 60 * 60 * 24),
+    )
     : 0;
 
   // Check if last event has an exception
   const hasException = latestEvent.additional?.exceptionCode;
-  const ogUrl = getEnv("BASE_URL") ? getEnv("BASE_URL") : "https://whereis.eg1.io";
+  const ogUrl = getEnv("BASE_URL")
+    ? getEnv("BASE_URL")
+    : "https://whereis.eg1.io";
 
   // Build carrier tracking URL
   const trackingId = data.entity.id;
-  const prefix = trackingId.split('-')[0];
+  const prefix = trackingId.split("-")[0];
   const payload = trackingId.slice(prefix.length + 1);
   const carrierConfig = carriers[prefix as keyof typeof carriers];
-  const carrierTrackingUrl = carrierConfig ? carrierConfig.trackingUrl.replace('{id}', payload) : null;
+  const carrierTrackingUrl = carrierConfig
+    ? carrierConfig.trackingUrl.replace("{id}", payload)
+    : null;
   const carrierName = carrierConfig ? carrierConfig.name : null;
-  
 
   return (
     <div class="font-['iA_Writer_Quattro'] leading-relaxed max-w-xl mx-auto min-h-screen flex flex-col pt-4 px-4">
-      
       <Head>
-        <title> → {data.entity.id}</title>
+        <title>→ {data.entity.id}</title>
         <meta property="og:title" content={`→ ${data.entity.id}`} />
         <meta name="twitter:title" content={`→ ${data.entity.id}`} />
         <meta property="og:url" content={`${ogUrl}/${data.entity.id}`} />
@@ -69,10 +74,18 @@ export default define.page(function WhereIs(ctx) {
         <div id="main-content" style="display: block;">
           <div class="mb-12 space-y-6">
             <div class="pt-12 text-sm">
-              {!isDelivered && <div class="uppercase mb-1 text-black/60">Last Major Event</div>}
-              <h1 class={isDelivered ? "text-4xl font-bold tracking-tight text-green-500" : "text-4xl font-bold tracking-tight"}>
-                <div id="status" class="flex flex-col sm:flex-row sm:items-end gap-1.5 sm:gap-3 relative">
-                  
+              {!isDelivered && (
+                <div class="uppercase mb-1 text-black/60">Last Major Event</div>
+              )}
+              <h1
+                class={isDelivered
+                  ? "text-4xl font-bold tracking-tight text-green-500"
+                  : "text-4xl font-bold tracking-tight"}
+              >
+                <div
+                  id="status"
+                  class="flex flex-col sm:flex-row sm:items-end gap-1.5 sm:gap-3 relative"
+                >
                   {latestStatus}
                 </div>
               </h1>
@@ -80,11 +93,10 @@ export default define.page(function WhereIs(ctx) {
               {isDelivered && (
                 <div>
                   <div class="mt-1">
-                    {deliveryDays} {deliveryDays === 1 ? 'day' : 'days'}
+                    {deliveryDays} {deliveryDays === 1 ? "day" : "days"}
                   </div>
                 </div>
               )}
-              
             </div>
             <div class="grid grid-cols-2 gap-8 text-sm">
               <div>
@@ -94,36 +106,65 @@ export default define.page(function WhereIs(ctx) {
               <div>
                 <div class="uppercase mb-1"></div>
                 <div>
-              {carrierTrackingUrl && (
-                <div class="col-span-2">
-                  <div class="uppercase mb-1 text-black/60">Carrier Tracking</div>
-                  <a href={carrierTrackingUrl} target="_blank" rel="noopener noreferrer" class="text-black/80 underline underline-offset-2 hover:text-black">
-                    {carrierName} →
-                  </a>
+                  {carrierTrackingUrl && (
+                    <div class="col-span-2">
+                      <div class="uppercase mb-1 text-black/60">
+                        Carrier Tracking
+                      </div>
+                      <a
+                        href={carrierTrackingUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-black/80 underline underline-offset-2 hover:text-black"
+                      >
+                        {carrierName} →
+                      </a>
+                    </div>
+                  )}
                 </div>
-              )}</div>
               </div>
-              <div id="origin-container" style={`display: ${data.entity.additional?.origin ? 'block' : 'none'};`}>
+              <div
+                id="origin-container"
+                style={`display: ${
+                  data.entity.additional?.origin ? "block" : "none"
+                };`}
+              >
                 <div class="uppercase mb-1 text-black/60">From</div>
-                <div id="origin">{data.entity.additional?.origin || ''}</div>
+                <div id="origin">{data.entity.additional?.origin || ""}</div>
               </div>
-              <div id="destination-container" style={`display: ${data.entity.additional?.destination ? 'block' : 'none'};`}>
+              <div
+                id="destination-container"
+                style={`display: ${
+                  data.entity.additional?.destination ? "block" : "none"
+                };`}
+              >
                 <div class="uppercase mb-1 text-black/60">To</div>
-                <div id="destination">{data.entity.additional?.destination || ''}</div>
+                <div id="destination">
+                  {data.entity.additional?.destination || ""}
+                </div>
               </div>
             </div>
           </div>
 
           {hasException && (
             <div class="mb-12 p-4 bg-red-50 text-sm">
-              <div class="text-red-600 uppercase mb-2">{latestEvent.additional.exceptionDesc}</div>
+              <div class="text-red-600 uppercase mb-2">
+                {latestEvent.additional.exceptionDesc}
+              </div>
               <div class="text-red-600">{latestEvent.notes}</div>
             </div>
           )}
 
-          <div id="timeline" class="pl-4 [&:has(details)>div:first-child]:pb-4 mt-12 pt-12 border-t border-black/10">
+          <div
+            id="timeline"
+            class="pl-4 [&:has(details)>div:first-child]:pb-4 mt-12 pt-12 border-t border-black/10"
+          >
             {/* First event */}
-            <EventItem event={data.events[0]} index={0} isLast={data.events.length === 1} />
+            <EventItem
+              event={data.events[0]}
+              index={0}
+              isLast={data.events.length === 1}
+            />
 
             {/* Collapsible middle events (only if more than 3 events) */}
             {data.events.length > 3 && (
@@ -131,7 +172,9 @@ export default define.page(function WhereIs(ctx) {
                 <summary class="relative pl-8 pb-10 pt-5 cursor-pointer select-none list-none border-l border-dashed border-black/10 group-open:border-solid w-fit">
                   <span class="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded text-xs text-black/80 inline-block w-44 text-center">
                     <span class="group-open:hidden">Show full history</span>
-                    <span class="hidden group-open:inline">Hide full history</span>
+                    <span class="hidden group-open:inline">
+                      Hide full history
+                    </span>
                   </span>
                 </summary>
                 {data.events.slice(1, -1).map((event, i) => (
@@ -147,17 +190,20 @@ export default define.page(function WhereIs(ctx) {
 
             {/* Last event (if more than 1 event) */}
             {data.events.length > 1 && (
-              <EventItem event={data.events[data.events.length - 1]} index={data.events.length - 1} isLast />
+              <EventItem
+                event={data.events[data.events.length - 1]}
+                index={data.events.length - 1}
+                isLast
+              />
             )}
           </div>
-
         </div>
       </div>
 
       {/* JSON Toggle Button */}
-      <JsonViewer 
-        data={data} 
-        processingTime={APItime || 0} 
+      <JsonViewer
+        data={data}
+        processingTime={APItime || 0}
       />
 
       <Footer />
@@ -169,4 +215,4 @@ export default define.page(function WhereIs(ctx) {
       </div>
     </div>
   );
-})
+});
