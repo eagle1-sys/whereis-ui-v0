@@ -22,7 +22,7 @@ export default define.page(function Home() {
         <div class="flex-grow w-full py-12">
           <div class="relative">
             <div class="space-y-6">
-              <h1 class="text-4xl font-['Fugaz_One'] mb-32">
+              <h1 class="text-4xl md:text-5xl font-['Dancing_Script'] font-bold mb-32">
                 Where is it?
               </h1>
               <form
