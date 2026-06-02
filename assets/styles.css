@@ -40,14 +40,8 @@
 @font-face {
   font-family: 'Dancing Script';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 700;
   font-display: swap;
-  src: url("https://fonts.gstatic.com/s/dancingscript/v25/If2RXTr6YS-zF4S-kcSWSVi_szLgiuE.woff2") format('woff2');
+  src: url(https://fonts.gstatic.com/s/dancingscript/v29/If2RXTr6YS-zF4S-kcSWSVi_szLgiuEHiC4W.woff2) format('woff2');
 }
-@font-face {
-  font-family: 'Dancing Script';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("https://fonts.gstatic.com/s/dancingscript/v25/If2SXTr6YS-zF4S-kcSWSVi_sxPJE-HnlZM.woff2") format('woff2');
-}
+
