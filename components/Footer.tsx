@@ -10,7 +10,7 @@ export default function Footer({ class: className = "py-8" }: FooterProps) {
         target="_blank"
         class="underline hover:no-underline"
       >
-        v0.3.2
+        v0.3.3
       </a>{" "}
       ~ Powered by{" "}
       <a
