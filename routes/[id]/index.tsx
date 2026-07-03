@@ -80,7 +80,7 @@ export default define.page(function WhereIs(ctx) {
 
         <div id="main-content" style="display: block;">
           <div class="mb-12 space-y-6">
-            <div class="pt-12 text-sm">
+            <div class="pt-2 mb-16 text-sm">
               {!isDelivered && (
                 <div class="uppercase mb-1 text-black/60">Last Major Event</div>
               )}
