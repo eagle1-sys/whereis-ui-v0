@@ -153,7 +153,7 @@ export default define.page(function WhereIs(ctx) {
             </div>
           </div>
 
-          {hasException && (
+          {hasException && latestEvent.notes && (
             <div class="mb-12 p-4 bg-red-50 text-sm">
               <div class="text-red-600 uppercase mb-2">
                 {latestEvent.additional.exceptionDesc}
