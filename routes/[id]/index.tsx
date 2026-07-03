@@ -28,10 +28,17 @@ export default define.page(function WhereIs(ctx) {
   // Check if delivered (3500 event exists)
   const deliveredEvent = data.events.find((e) => e.status === 3500);
   const isDelivered = !!deliveredEvent;
-  const deliveryDays = isDelivered
+
+  // Transit duration is measured from the shipment's start: prefer the 3000
+  // (order/created) event, falling back to the 3100 (pickup) event.
+  const startEvent =
+    data.events.find((e: typeof data.events[number]) => e.status === 3000) ||
+    data.events.find((e: typeof data.events[number]) => e.status === 3100);
+  const showDeliveryDays = isDelivered && !!startEvent;
+  const deliveryDays = showDeliveryDays
     ? Math.round(
       (new Date(deliveredEvent.when).getTime() -
-        new Date(data.events[0].when).getTime()) / (1000 * 60 * 60 * 24),
+        new Date(startEvent.when).getTime()) / (1000 * 60 * 60 * 24),
     )
     : 0;
 
@@ -90,7 +97,7 @@ export default define.page(function WhereIs(ctx) {
                 </div>
               </h1>
 
-              {isDelivered && (
+              {showDeliveryDays && (
                 <div>
                   <div class="mt-1">
                     {deliveryDays} {deliveryDays === 1 ? "day" : "days"}
