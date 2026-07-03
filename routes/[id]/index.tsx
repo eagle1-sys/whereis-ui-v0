@@ -36,7 +36,7 @@ export default define.page(function WhereIs(ctx) {
     data.events.find((e: typeof data.events[number]) => e.status === 3100);
   const showDeliveryDays = isDelivered && !!startEvent;
   const deliveryDays = showDeliveryDays
-    ? Math.round(
+    ? Math.ceil(
       (new Date(deliveredEvent.when).getTime() -
         new Date(startEvent.when).getTime()) / (1000 * 60 * 60 * 24),
     )
