@@ -31,8 +31,9 @@ export default define.page(function WhereIs(ctx) {
 
   // Transit duration is measured from the shipment's start: prefer the 3000
   // (order/created) event, falling back to the 3100 (pickup) event.
-  const startEvent =
-    data.events.find((e: typeof data.events[number]) => e.status === 3000) ||
+  const startEvent = data.events.find((e: typeof data.events[number]) =>
+    e.status === 3000
+  ) ||
     data.events.find((e: typeof data.events[number]) => e.status === 3100);
   const showDeliveryDays = isDelivered && !!startEvent;
   const deliveryDays = showDeliveryDays
@@ -68,7 +69,7 @@ export default define.page(function WhereIs(ctx) {
         <meta name="twitter:url" content={`${ogUrl}/${data.entity.id}`} />
       </Head>
       <div class="flex justify-center mt-4 mb-16">
-        <a href="/" style="display:none;" class="!inline-block">
+        <a href="/">
           <Logo />
         </a>
       </div>
@@ -111,24 +112,21 @@ export default define.page(function WhereIs(ctx) {
                 <div id="tracking-num">{data.entity.id}</div>
               </div>
               <div>
-                <div class="uppercase mb-1"></div>
-                <div>
-                  {carrierTrackingUrl && (
-                    <div class="col-span-2">
-                      <div class="uppercase mb-1 text-black/60">
-                        Carrier Tracking
-                      </div>
-                      <a
-                        href={carrierTrackingUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="text-black/80 underline underline-offset-2 hover:text-black"
-                      >
-                        {carrierName} →
-                      </a>
+                {carrierTrackingUrl && (
+                  <>
+                    <div class="uppercase mb-1 text-black/60">
+                      Carrier Tracking
                     </div>
-                  )}
-                </div>
+                    <a
+                      href={carrierTrackingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-black/80 underline underline-offset-2 hover:text-black"
+                    >
+                      {carrierName} →
+                    </a>
+                  </>
+                )}
               </div>
               <div
                 id="origin-container"
@@ -214,12 +212,6 @@ export default define.page(function WhereIs(ctx) {
       />
 
       <Footer />
-
-      <div class="h-0 text-transparent overflow-hidden">
-        <span class="font-bold"></span>
-        <span class="italic"></span>
-        <span class="font-['Dancing_Script']"></span>
-      </div>
     </div>
   );
 });

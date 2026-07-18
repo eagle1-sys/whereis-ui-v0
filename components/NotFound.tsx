@@ -21,7 +21,7 @@ export default function NotFound({ data }: { data?: any } = {}) {
         <title>{heading}</title>
       </Head>
       <div class="flex justify-center mt-4 mb-16">
-        <a href="/" style="display:none;" class="!inline-block">
+        <a href="/">
           <Logo />
         </a>
       </div>
