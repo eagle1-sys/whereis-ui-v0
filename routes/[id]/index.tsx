@@ -29,12 +29,12 @@ export default define.page(function WhereIs(ctx) {
   const deliveredEvent = data.events.find((e) => e.status === 3500);
   const isDelivered = !!deliveredEvent;
 
-  // Transit duration is measured from the shipment's start: prefer the 3000
-  // (order/created) event, falling back to the 3100 (pickup) event.
+  // Transit duration is measured from the shipment's start: prefer the 3100
+  // (Received by Carrier) event, falling back to the 3050 (Picked up) event.
   const startEvent = data.events.find((e: typeof data.events[number]) =>
-    e.status === 3000
+    e.status === 3100
   ) ||
-    data.events.find((e: typeof data.events[number]) => e.status === 3100);
+    data.events.find((e: typeof data.events[number]) => e.status === 3050);
   const showDeliveryDays = isDelivered && !!startEvent;
   const deliveryDays = showDeliveryDays
     ? Math.ceil(
